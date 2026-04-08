@@ -18,7 +18,6 @@ void startTUIMode();
 void startGUIMode();
 
 //My function
-#include "./include/UDP_TUNNEL/udpTunnel.h"
 #include "./include/ArpSpoof/ArpSpoof.h"
 
 int main() {
@@ -160,12 +159,7 @@ void choosingOption() {
             case 0:
                 return; // Return to launch options
             case 1:{
-                udpTunnel::udpTunnelStruct udps;
-                udps.startUdpTunnel();
-                cout << "\nPress Enter to continue...";
-                cin.ignore();
-                cin.get();
-                cout << "UDP Tuning feature coming soon..." << endl;
+                cout << "Logs feature coming soon..." << endl;
                 this_thread::sleep_for(std::chrono::seconds(2));
                 break;
             }

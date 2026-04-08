@@ -7,6 +7,6 @@
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
-    "electron":"npx electron ./src/main.js"
+    "electron":"npx electron ./src/main.js --no-sandbox --disable-gpu-sandbox"
   }
 }
