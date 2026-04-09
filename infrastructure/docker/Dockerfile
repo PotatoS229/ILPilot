@@ -1,22 +1,17 @@
-# Используем Ubuntu как основу для запуска
-FROM ubuntu:22.04 AS builder
-# Предотвращаем интерактивные запросы при установке пакетов
+FROM ubuntu:22.04
+
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Установка всех зависимостей проекта 
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     cmake \
     git \
     wget \
     build-essential \
-    # Зависимости для libnetfilter_queue
     libnetfilter-queue-dev \
     libnfnetlink-dev \
-    # Зависимости для PcapPlusPlus (libpcap)
     libpcap-dev \
-    # Зависимости для libev
     libev-dev \
-    # Зависимости electron 
     libnss3 \
     libnspr4 \
     libatk-bridge2.0-0 \
@@ -35,38 +30,39 @@ RUN apt-get update && apt-get install -y \
     libdbus-1-3 \
     libx11-xcb1 \
     libxcb1 \
+    sudo \
+    xvfb \
     && rm -rf /var/lib/apt/lists/*
 
-# Установка Node.js
+# Install Node.js
 RUN apt-get update && apt-get install -y curl ca-certificates \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Создаем пользователя
-RUN useradd -m -s /bin/bash user
-RUN echo "user:password123" | chpasswd
-
-# Клонируем репозиторий
+# Clone repository
 WORKDIR /home/user
 RUN git clone https://github.com/PotatoS229/UDPilot.git
 
-# Устанавливаем зависимости Node.js
+# Install Node dependencies
 WORKDIR /home/user/UDPilot/app
 RUN npm install
 
-# Переключаемся на root для запуска installer.sh
-USER root
-WORKDIR /home/user/UDPilot
+# Run installer and build (as root)
+WORKDIR /home/user/UDPilot/infrastructure/docker
+RUN chmod +x installer.sh && ./installer.sh || echo "Installer completed with warnings"
 
-# Проверяем наличие installer.sh (одной командой)
-RUN ls -la && ls -la app/ || true
+WORKDIR /home/user/UDPilot/
+RUN cmake --build build
 
-# Запускаем installer.sh (упрощенный вариант без if)
-RUN chmod +x installer.sh 2>/dev/null || true
-RUN bash installer.sh 2>/dev/null || echo "installer.sh not found or failed"
+# Create user for running
+RUN useradd -m -s /bin/bash user && \
+    echo "user:password123" | chpasswd && \
+    chown -R user:user /home/user/UDPilot
 
-# Снова переключаемся на пользователя user
+# Switch to user
+USER user
 WORKDIR /home/user/UDPilot/app
 
-
+EXPOSE 5173
+CMD ["npm", "run", "start"]
