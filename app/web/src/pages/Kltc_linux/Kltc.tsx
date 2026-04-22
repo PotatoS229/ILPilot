@@ -1,9 +1,9 @@
-import './Menu.css';
+import './Kltc.css';
 import {Link} from 'react-router-dom'
 import MenuButton from '../../components/MenuButton/MenuButton.tsx'
 import ThemeToggle from '../../components/themes/themes.tsx'
 
-const MenuPage = () => {
+const KltcPage = () => {
     return (
     <div className="dashboard-card">
         <ThemeToggle></ThemeToggle>
@@ -61,26 +61,19 @@ const MenuPage = () => {
 
 
             <div className="content-preview">
-                <div className="placeholder-icon">📊</div>
-                <h3>Сводка по выбранному модулю</h3>
-                <p>Здесь появится интерфейс настройки, визуализация или результаты работы модуля, выбранного слева. Используйте меню для навигации.</p>
-                
-
-                <div className="mock-stat">
-                    <div className="mock-stat-item">
-                        <div className="label">активные агенты</div>
-                        <div className="value">18</div>
-                    </div>
-                    <div className="mock-stat-item">
-                        <div className="label">задач в очереди</div>
-                        <div className="value">7</div>
-                    </div>
-                    <div className="mock-stat-item">
-                        <div className="label">поверхность</div>
-                        <div className="value">143</div>
-                    </div>
+                <h3>OS</h3>
+                <div className="os-buttons-container">
+                    <button className="os-btn windows-btn">
+                        <span className="os-icon">🪟</span>
+                        <span className="os-name">Windows</span>
+                        <span className="os-version">11/10/8</span>
+                    </button>
+                    <button className="os-btn linux-btn">
+                        <span className="os-icon">🐧</span>
+                        <span className="os-name">Linux</span>
+                        <span className="os-version">Ubuntu/Debian/CentOS</span>
+                    </button>
                 </div>
-
             </div>
         </div>
 
@@ -95,7 +88,4 @@ const MenuPage = () => {
     )
 }
 
-export default MenuPage;
-
-
-  
+export default KltcPage;

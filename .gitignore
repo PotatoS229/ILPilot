@@ -98,6 +98,7 @@ CTestTestfile.cmake
 compile_commands.json
 *.cmake
 !CMakeLists.txt
+# core/src/include/test_net
 _build/
 build/
 out/

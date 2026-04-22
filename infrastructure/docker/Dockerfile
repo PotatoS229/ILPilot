@@ -1,6 +1,7 @@
 FROM ubuntu:22.04
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive \
+    NODE_ENV=production
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -8,61 +9,52 @@ RUN apt-get update && apt-get install -y \
     git \
     wget \
     build-essential \
-    libnetfilter-queue-dev \
+    libnetfilter-queue-dev \f
     libnfnetlink-dev \
     libpcap-dev \
     libev-dev \
-    libnss3 \
-    libnspr4 \
-    libatk-bridge2.0-0 \
-    libatk1.0-0 \
-    libcups2 \
-    libdrm2 \
-    libxkbcommon0 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxfixes3 \
-    libxrandr2 \
-    libgbm1 \
-    libasound2 \
-    libxshmfence1 \
-    libgtk-3-0 \
-    libdbus-1-3 \
-    libx11-xcb1 \
-    libxcb1 \
+    curl \
+    ca-certificates \
     sudo \
     xvfb \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Node.js
-RUN apt-get update && apt-get install -y curl ca-certificates \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+# Install Node.js 20.x
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Clone repository
+# Create user first (лучше создать до клонирования)
+RUN useradd -m -s /bin/bash user && \
+    mkdir -p /home/user/UDPilot && \
+    chown -R user:user /home/user
+
+# Clone repository as user
+USER user
 WORKDIR /home/user
 RUN git clone https://github.com/PotatoS229/UDPilot.git
 
 # Install Node dependencies
 WORKDIR /home/user/UDPilot/app
-RUN npm install
+RUN npm install --production
 
-# Run installer and build (as root)
-WORKDIR /home/user/UDPilot/infrastructure/docker
-RUN chmod +x installer.sh && ./installer.sh || echo "Installer completed with warnings"
+# Build C++ components (as user)
+WORKDIR /home/user/UDPilot
+RUN cmake -S . -B build && \
+    cmake --build build --parallel $(nproc)
 
-WORKDIR /home/user/UDPilot/
-RUN cmake --build build
-
-# Create user for running
-RUN useradd -m -s /bin/bash user && \
-    echo "user:password123" | chpasswd && \
-    chown -R user:user /home/user/UDPilot
-
-# Switch to user
-USER user
-WORKDIR /home/user/UDPilot/app
+# Check if installer is really needed
+# Если installer.sh нужен, запустите его с правильной обработкой ошибок:
+RUN if [ -f infrastructure/docker/installer.sh ]; then \
+        chmod +x infrastructure/docker/installer.sh && \
+        ./infrastructure/docker/installer.sh; \
+    fi
 
 EXPOSE 5173
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:5173 || exit 1
+
+# Use exec form for proper signal handling
 CMD ["npm", "run", "start"]

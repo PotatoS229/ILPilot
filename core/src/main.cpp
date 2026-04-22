@@ -20,6 +20,12 @@ void startGUIMode();
 //My function
 #include "./include/ArpSpoof/ArpSpoof.h"
 
+#ifdef _WIN32
+    #include "./include/kernel_level_traffic_capture/linux/kltc_linux.h"
+#elif defined (__linux__)
+    #include "./include/kernel_level_traffic_capture/windows/kltc_windows.h"
+#endif
+
 int main() {
     const string WHITE_TEXT = "\033[37m";
     const string RESET = "\033[0m";
