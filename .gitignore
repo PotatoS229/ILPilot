@@ -103,7 +103,7 @@ compile_commands.json
 =======
 # core/src/include/test_net
 >>>>>>> parent of a9f4c05 (Срою ML)
-# core/src/include/test_net
+core/src/include/test_net
 _build/
 build/
 out/
