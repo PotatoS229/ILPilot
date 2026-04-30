@@ -16,7 +16,7 @@ find_library(PCAPPP_LIB Pcap++ PATHS /usr/local/lib /usr/lib/x86_64-linux-gnu /u
 find_library(PACKETPP_LIB Packet++ PATHS /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib)
 find_library(COMMONPP_LIB Common++ PATHS /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib)
 find_library(PCAP_LIB pcap PATHS /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib)
-find_library(LIBNETFILTER_QUEUE_LIB netfilter_queue PATHS /usr/lib/x86_64-linux-gnu /usr/lib)
+find_library(LIBNETFILTER_QUEUE_LIB netfilter_queue PATHS /usr/lib/x86_64-linux-gnu /usr/lib) 
 
 # Include directories
 include_directories(

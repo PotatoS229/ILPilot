@@ -105,6 +105,7 @@ compile_commands.json
 >>>>>>> parent of a9f4c05 (Срою ML)
 core/src/include/test_net
 # ML_Pilot
+sandbox
 _build/
 build/
 out/

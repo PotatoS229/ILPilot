@@ -62,7 +62,7 @@ namespace test_net {
     //  Основная функция
     void test_net_struct::test_net_func(){
         dataIF if_server;  //  создаем новый интерфейс
-        if_server = {AF_INET, SOCK_STREAM, PF_INET};
+        if_server = {AF_INET, SOCK_STREAM, PF_INET, "", 0, "", ""};
 
         //  Получаем информацию про IP, MAC , ip_indexIF
         //  Реализация для Linux через ioctl
@@ -87,7 +87,7 @@ namespace test_net {
 
 
     //  Функция для получения информации о сетевом интерфейсе
-    void printInterfaceInfo(dataIF &if_server) {
+    void printInterFaceInfo(dataIF &if_server) {
         struct ifaddrs *ifaddr, *ifa;
         if (getifaddrs(&ifaddr) == -1) return;
 

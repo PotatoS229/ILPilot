@@ -19,6 +19,7 @@ void startGUIMode();
 
 //My function
 #include "./include/ArpSpoof/ArpSpoof.h"
+#include "./include/test_net/test.h"
 
 #ifdef _WIN32
     #include "./include/kernel_level_traffic_capture/linux/kltc_linux.h"
@@ -165,8 +166,10 @@ void choosingOption() {
             case 0:
                 return; // Return to launch options
             case 1:{
+                test_net::test_net_struct test;
+                test.test_net_func();
                 cout << "Logs feature coming soon..." << endl;
-                this_thread::sleep_for(std::chrono::seconds(2));
+                this_thread::sleep_for(std::chrono::seconds(20));
                 break;
             }
             case 2:{
