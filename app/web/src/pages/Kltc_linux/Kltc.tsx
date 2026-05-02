@@ -9,7 +9,7 @@ const KltcPage = () => {
         <ThemeToggle></ThemeToggle>
         <div className="welcome-header">
             <h1>⚙️ Панель управления</h1>
-            <p>UDPilot • выберите модуль для настройки</p>
+            <p>ILPilot • выберите модуль для настройки</p>
         </div>
         <div className="main-layout">
 
@@ -49,7 +49,7 @@ const KltcPage = () => {
                     </a>
 
                     <a 
-                        href="https://github.com/PotatoS229/UDPilot" 
+                        href="https://github.com/PotatoS229/ILPilot" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         style={{ textDecoration: 'none' }}
@@ -79,7 +79,7 @@ const KltcPage = () => {
 
 
         <div className="footer-links">
-            <span>© 2025 UDPilot</span>
+            <span>© 2025 ILPilot</span>
             <span>
                 <Link to='/auth'>🔄 Сменить профиль</Link> • <Link to="/">Настройки</Link>
             </span>
