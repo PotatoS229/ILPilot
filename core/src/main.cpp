@@ -79,12 +79,12 @@ void startGUIMode() {
     
     // Navigate to the app directory and start Electron
     #ifdef _WIN32
-        system("cd ../app && npm run start");
+        system("cd ../ILP-app && npm run tauri:dev");
     #else
-        system("cd ../app && npm run start");
+        system("cd ../ILP-app && npm run tauri:dev");
     #endif
     
-    this_thread::sleep_for(std::chrono::seconds(2));
+    this_thread::sleep_for(std::chrono::seconds(20));
 }
 
 void launchOptions() {

@@ -1,0 +1,228 @@
+/* ----- Туннель Студия — неоновая градиентная тема (логотип: волны cyan→purple→pink) ----- */
+:root {
+  --bg-page: #05060a;
+  --card-bg: #0c0f17;
+  --card-bg-hover: #151c26;
+  --border-light: #23283a;
+  --border-glow: rgba(6, 182, 212, 0.3);
+
+  /* акцентные градиенты из логотипа */
+  --grad-cyan: #06b6d4;
+  --grad-purple: #8b5cf6;
+  --grad-pink: #ec4899;
+  --accent-grad: linear-gradient(135deg, var(--grad-cyan), var(--grad-purple), var(--grad-pink));
+  --accent-grad-hover: linear-gradient(135deg, #2dd4bf, #a78bfa, #f472b6);
+
+  --text-main: #f0f3fc;
+  --text-dim: #a5b3da;
+  --text-muted: #5f6e91;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius-card: 24px;
+  --radius-sm: 14px;
+  --shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(6, 182, 212, 0.1);
+  --glow-text: drop-shadow(0 0 6px rgba(139, 92, 246, 0.4));
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-page);
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background-image: radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 55%),
+                    radial-gradient(circle at 85% 70%, rgba(236, 72, 153, 0.05) 0%, transparent 60%);
+}
+
+/* Главный контейнер */
+.dashboard-card {
+  background: transparent;
+}
+
+/* Шапка */
+
+/* Основная сетка */
+.main-layout {
+  display: flex;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+}
+
+
+
+/* ===== ОСНОВНОЙ КОНТЕНТ (дашборд) ===== */
+
+
+/* Блок метрик — 2 карточки в ряд */
+.metrics-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 1.8rem;
+}
+
+.metric-tile {
+  background: #090c12;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--border-light);
+  transition: 0.25s ease;
+}
+
+.metric-tile:hover {
+  background: var(--card-bg-hover);
+  border-color: var(--grad-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+}
+
+.metric-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  color: var(--grad-cyan);
+}
+
+.metric-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: var(--font-mono);
+  line-height: 1;
+  margin: 0.3rem 0;
+}
+
+.metric-footnote {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  border-top: 1px dashed rgba(139, 92, 246, 0.3);
+  padding-top: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+/* Строка статусов (активный-активный, хранилище) */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.status-chip {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border-radius: 40px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: var(--text-dim);
+}
+
+.status-chip strong {
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 600;
+}
+
+/* График */
+.chart-area {
+  background: #080b12;
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border: 1px solid #202433;
+}
+
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chart-svg {
+  width: 100%;
+  height: 140px;
+}
+
+/* Блок задержки (latency) */
+.latency-block {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.2rem 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  background: #080b12;
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--grad-pink);
+}
+
+.latency-item {
+  color: var(--text-dim);
+}
+
+.latency-value {
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+/* Футер */
+.footer-links {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(6, 182, 212, 0.2);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.footer-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--grad-cyan);
+  text-shadow: 0 0 4px rgba(6, 182, 212, 0.5);
+}
+
+/* Адаптив */
+@media (max-width: 860px) {
+  .dashboard-card {
+    margin: 1rem;
+    padding: 1rem;
+  }
+  .main-layout {
+    flex-direction: column;
+  }
+  .metrics-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.menu-aside::-webkit-scrollbar {
+  width: 4px;
+}
