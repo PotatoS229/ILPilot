@@ -1,53 +1,107 @@
-import { Link } from 'react-router-dom';
+
+import { useNavigate, useLocation } from 'react-router-dom';
+import { 
+  LayoutDashboard, Network, Shield, Brain, Server, FileText,
+  Activity, TrendingUp, Lock, Sparkles
+} from 'lucide-react';
+import './SideMenu.css';
 
 const menuItems = [
-  { id: 1, name: "⚙️ Docker", internalPath: "/menu" },
-  { id: 2, name: "🛠 kltc", internalPath: "/kltc" },
-  { id: 3, name: "🚀 UDP-тюнинг", internalPath: "/kltc" },
-  { id: 4, name: "📊 Визуализация в реальном времени", internalPath: "/kltc" },
-  { id: 5, name: "📋 Логи", internalPath: "/kltc" },
-  { id: 6, name: "🔧 Настройки", internalPath: "/kltc"},
-  { id: 7, name: "💬 Telegram", externalUrl: "https://t.me/@PotatoS229" },
-  { id: 8, name: "⭐ Поставить звезду на GitHub", externalUrl: "https://github.com/PotatoS229/ILPilot" },
+  { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard, section: 'main', path: '/menu' },
+  { id: 'tunnels', name: 'Tunnels & Mesh', icon: Network, section: 'main', path: '/kltc' },
+  { id: 'vault', name: 'Zero Trust & Vault', icon: Shield, section: 'security', path: '/' },
+  { id: 'forecasting', name: 'AI Forecasting', icon: Brain, section: 'insights', path: '/' },
+  { id: 'cluster', name: 'HA Cluster', icon: Server, section: 'infrastructure', path: '/' },
+  { id: 'audit', name: 'Audit & SOC2', icon: FileText, section: 'compliance', path: '/' },
 ];
 
-/**
- * «Другой MenuButton» – теперь это просто функция, возвращающая размеченный div.
- * При желании можно заменить на <button> или поменять классы.
- */
-const renderButton = (id: number, name: string) => (
-  <div className="menu-btn" role="button">
-    <span>{id}.</span>{name}
-  </div>
-);
+const sections = {
+  main: { label: 'MAIN', icon: Activity },
+  security: { label: 'SECURITY', icon: Lock },
+  insights: { label: 'INSIGHTS', icon: TrendingUp },
+  infrastructure: { label: 'INFRASTRUCTURE', icon: Server },
+  compliance: { label: 'COMPLIANCE', icon: FileText },
+};
 
-const SideMenu = () => (
-  <aside className="menu-aside">
-    <h2>📋 Меню возможностей</h2>
-    <div className="menu-grid">
-      {menuItems.map((item) => {
-        const button = renderButton(item.id, item.name);
+const SideMenu = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-        if (item.internalPath) {
+  // Определяем активный пункт по текущему пути
+  const activePage = menuItems.find(item => item.path === location.pathname)?.id || 'dashboard';
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
+
+  const groupedItems = menuItems.reduce((acc, item) => {
+    const section = item.section;
+    if (!acc[section]) acc[section] = [];
+    acc[section].push(item);
+    return acc;
+  }, {} as Record<string, typeof menuItems>);
+
+  return (
+    <aside className="sidebar">
+      <div className="sidebar-header">
+        {/* <div className="logo-wrapper">
+        </div> */}
+        <div style={{ fontSize: '0.7rem', color: 'var(--text-gray-500)', marginTop: '0.5rem' }}>
+          Enterprise · Zero Trust Mesh
+        </div>
+      </div>
+
+      <div className="sidebar-nav">
+        {Object.entries(groupedItems).map(([section, items]) => {
+          const SectionIcon = sections[section as keyof typeof sections]?.icon;
           return (
-            <Link key={item.id} to={item.internalPath} style={{ textDecoration: 'none' }}>
-              {button}
-            </Link>
+            <div key={section} className="nav-section">
+              <div className="nav-label">
+                {SectionIcon && <SectionIcon size={10} style={{ display: 'inline', marginRight: '4px' }} />}
+                {' '}{sections[section as keyof typeof sections]?.label || section.toUpperCase()}
+              </div>
+              {items.map((item) => {
+                const Icon = item.icon;
+                const isActive = activePage === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNavigation(item.path)}
+                    className={`sidebar-item ${isActive ? 'active' : ''}`}
+                  >
+                    <Icon size={18} />
+                    <span>{item.name}</span>
+                    {item.id === 'forecasting' && !isActive && (
+                      <span className="notification-badge">AI</span>
+                    )}
+                    {item.id === 'audit' && !isActive && (
+                      <span className="notification-badge" style={{ background: 'var(--accent-green)' }}>NEW</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           );
-        }
+        })}
+      </div>
 
-        if (item.externalUrl) {
-          return (
-            <a key={item.id} href={item.externalUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-              {button}
-            </a>
-          );
-        }
-
-        return button;
-      })}
-    </div>
-  </aside>
-);
+      <div className="sidebar-footer">
+        <div className="user-card">
+          <div className="user-avatar">
+            <Sparkles size={16} />
+          </div>
+          <div className="user-info">
+            <div className="user-name">Admin User</div>
+            <div className="user-role">Platform Owner</div>
+          </div>
+          <div className="status-indicator" />
+        </div>
+        <div style={{ marginTop: '1rem', fontSize: '0.7rem', textAlign: 'center', color: 'var(--text-gray-500)' }}>
+          JWT + 2FA Protected
+        </div>
+      </div>
+    </aside>
+  );
+};
 
 export default SideMenu;

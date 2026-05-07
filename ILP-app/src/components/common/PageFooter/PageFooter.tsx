@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import './PageFooter.css'
 
 const PageFooter = () => (
   <div className="footer-links">

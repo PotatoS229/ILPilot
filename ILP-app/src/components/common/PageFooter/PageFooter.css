@@ -1,0 +1,29 @@
+/* Футер страницы */
+.footer-links {
+  margin-top: 40px;
+  padding: 20px 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text);
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-left: 15.5rem;
+}
+
+.footer-links a {
+  color: var(--text);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+    .footer-links {
+        margin-left: 0rem;
+    }
+}

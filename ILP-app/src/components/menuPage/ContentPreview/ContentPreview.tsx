@@ -1,7 +1,16 @@
 import TrafficChart from './TrafficChart';
 // import WelcomeHeader from '../../common/WelcomeHeader/WelcomeHeader'
 
-const ContentPreview = () => {
+interface TrafficDataProps {
+  trafficData: Array<{
+    timestamp: string;
+    throughput: number;
+    latency: number;
+  }>;
+}
+
+
+const ContentPreview = ({trafficData}: TrafficDataProps) => {
   return (
     <div className="content-preview">
       {/* < WelcomeHeader name="Menu Page" label="123"/> */}
@@ -35,7 +44,11 @@ const ContentPreview = () => {
           <span>📈 Анализ трафика в реальном времени</span>
           <span>📊 Прогнозируемая ИИ скорость: 210 МБ/с</span>
         </div>
-        <TrafficChart />
+        <TrafficChart 
+          data={trafficData}
+          title="Real-time Traffic Analysis"
+          predictedPeak={210}
+        />
       </div>
 
       {/* Латенси / задержка — как на втором изображении */}

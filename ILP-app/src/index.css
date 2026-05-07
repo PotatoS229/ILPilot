@@ -28,7 +28,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     font-size: 16px;
   }
 }
@@ -107,7 +107,7 @@ h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     font-size: 36px;
     margin: 20px 0;
   }
@@ -117,7 +117,7 @@ h2 {
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     font-size: 20px;
   }
 }
@@ -228,7 +228,7 @@ code {
 
 
 /* ===== БОКОВОЕ МЕНЮ ===== */
-.menu-aside {
+/* .menu-aside {
   flex: 1.2;
   min-width: 260px;
   background: rgba(12, 15, 23, 0.8);
@@ -260,7 +260,7 @@ code {
   padding: 0 1.5rem;
   margin-bottom: 1rem;
   font-weight: 600;
-}
+} */
 
 .menu-grid {
   display: flex;
@@ -336,9 +336,16 @@ code {
 }
 
 /* Стили для ссылок внутри меню */
-.menu-aside a {
+/* .menu-aside a {
   text-decoration: none;
   color: inherit;
+} */
+.main-content {
+  background: var(--bg-deep);
+  min-height: 100vh;
+  padding: 1.75rem 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* Основной контент (ContentPreview) */
@@ -583,41 +590,25 @@ code {
   border-bottom: none;
 }
 
-/* Футер страницы */
-.footer-links {
-  margin-top: 40px;
-  padding: 20px 32px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: var(--text);
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.footer-links a {
-  color: var(--text);
-  text-decoration: none;
-  transition: var(--transition);
-}
-
-.footer-links a:hover {
-  color: var(--accent);
-}
-
 /* Адаптивность */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
+  .welcome-header {
+    margin-left: 0rem;
+  }
   .main-layout {
     flex-direction: column;
     padding: 0 20px 20px 20px;
   }
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
 
-  .menu-aside {
+  /* .menu-aside {
     width: 100%;
     position: static;
     height: min-content;
-  }
+  } */
   .content-preview {
     display: contents;
   }
