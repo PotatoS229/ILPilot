@@ -1,6 +1,4 @@
-Вот обновленная версия README для **ILPilot**, выполненная в том же визуально насыщенном, структурированном и «уверенном» стиле, что и Tunnel Studio. Сохранена вся ключевая информация об XTLS-Reality, ML и UDP, но добавлены таблицы, цветовые акценты и "интерактивный" дух.
 
----
 
 <div align="center">
   <img src="https://img.shields.io/badge/ILPilot-VPN_Next_Gen-ff6b35?style=for-the-badge&logo=virustotal&logoColor=white" alt="ILPilot">
